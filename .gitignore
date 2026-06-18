@@ -1,0 +1,60 @@
+# West / Zephyr build output
+build/
+twister-out/
+
+# Artefatos CMake gerados pelo west build
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Ninja
+build.ninja
+.ninja_deps
+.ninja_log
+
+# Binários compilados (saem em build/zephyr/, mas por precaução)
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+
+# Kconfig — gerados durante o build
+autoconf.h
+.config
+.config.old
+
+# West workspace (se alguém rodar west init dentro desta pasta)
+.west/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Temporários
+*.tmp
+*.log
+
+# HTML gerado para exportação de PDF (não rastrear)
+docs/*.html
+
+# Prompt templates de IA — uso pessoal, não fazem parte do código
+skills/
