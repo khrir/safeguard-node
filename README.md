@@ -90,15 +90,29 @@ source .venv/bin/activate
 source zephyr/zephyr-env.sh
 ```
 
-### Compilar
+### Compilar para a placa
 
 ```sh
 # A partir da raiz do workspace
-west build -b nucleo_f401re safeguard-node
+west build -b nucleo_f401re safeguard-node --build-dir safeguard-node/build
 
 # Pristine (obrigatório após mudar .conf, .overlay ou board)
-west build -b nucleo_f401re -p always safeguard-node
+west build -b nucleo_f401re safeguard-node --build-dir safeguard-node/build -p always
 ```
+
+### Emulação sem hardware (macOS/Linux)
+
+`native_sim` só funciona no Linux. No macOS, use `mps2/an385` (Cortex-M3 via QEMU):
+
+```sh
+# Build para emulação
+west build -b mps2/an385 safeguard-node --build-dir safeguard-node/build
+
+# Rodar no QEMU (sair: Ctrl+A → X)
+west build --build-dir safeguard-node/build -t run
+```
+
+> O QEMU emula o tempo mais rápido que o relógio de parede — os timestamps no log estão corretos, mas o tempo real decorrido será menor.
 
 ### Gravar na placa
 
@@ -191,8 +205,6 @@ safeguard-node/
 ├── boards/
 │   └── nucleo_f401re.overlay  # adxl345@0 em &spi1
 ├── docs/
-│   ├── proposta_smartlevel.pdf
-│   └── roteiro_proposta_e_implementacao.md
 ├── Kconfig.safeguard       # opções CONFIG_SG_*
 ├── CMakeLists.txt
 ├── prj.conf
