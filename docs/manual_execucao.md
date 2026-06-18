@@ -22,7 +22,7 @@ brew install cmake ninja dtc qemu
 
 ## Configurar o ambiente
 
-Execute uma vez por sessão de terminal, a partir da raiz do workspace (`/Users/khrir/develop/zephyr`):
+Execute uma vez por sessão de terminal, a partir da raiz do workspace (`/zephyr`):
 
 ```sh
 source .venv/bin/activate        # ativa o Python com o west instalado
@@ -182,7 +182,7 @@ PASSED - safeguard.test_settings_round_trip
 
 ```sh
 # Ambiente (rodar sempre que abrir terminal novo)
-cd /Users/khrir/develop/zephyr
+cd /zephyr
 source .venv/bin/activate
 source zephyr/zephyr-env.sh
 
