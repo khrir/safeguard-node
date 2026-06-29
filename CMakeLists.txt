@@ -5,6 +5,6 @@ project(safeguard_node)
 
 target_sources(app PRIVATE
   src/main.c
-  src/zbus_channels.c
-  src/proc.c
+  src/bus/zbus_channels.c
+  src/logic/proc.c
 )
