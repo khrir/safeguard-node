@@ -8,3 +8,5 @@ target_sources(app PRIVATE
   src/bus/zbus_channels.c
   src/logic/proc.c
 )
+
+target_include_directories(app PRIVATE src)

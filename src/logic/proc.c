@@ -1,6 +1,6 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include "zbus_channels.h"
+#include "bus/zbus_channels.h"
 
 LOG_MODULE_REGISTER(sg_proc, LOG_LEVEL_INF);
 
@@ -17,7 +17,7 @@ bool sg_detect_impact(const struct sg_accel *current, const struct sg_accel *bas
     uint32_t alerta_flag = (uint32_t)(threshold * threshold * 64 / 100);
 
     if (delta_squared > alerta_flag) {
-        LOG_WARN("Alerta precoce: 80%% do threshold atingido.");
+        LOG_WRN("Alerta precoce: 80%% do threshold atingido.");
     }
 
     return delta_squared > (uint32_t)(threshold * threshold);

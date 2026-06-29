@@ -12,6 +12,4 @@ ZBUS_CHAN_DECLARE(system_state);
 ZBUS_CHAN_DECLARE(arm_event);
 
 // subscribers — threads que vão ouvir cada canal
-ZBUS_SUBSCRIBER_DECLARE(proc_sub);    /* proc_thread ouve: accel_data + arm_event */
-ZBUS_SUBSCRIBER_DECLARE(led_sub);     /* led_thread ouve: system_state */
-ZBUS_SUBSCRIBER_DECLARE(buzzer_sub);  /* buzzer_thread ouve: system_state */
+ZBUS_OBS_DECLARE(proc_sub, led_sub, buzzer_sub);
