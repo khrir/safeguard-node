@@ -7,6 +7,9 @@ target_sources(app PRIVATE
   src/main.c
   src/bus/zbus_channels.c
   src/logic/proc.c
+  src/actuators/led.c
+  src/actuators/buzzer.c
+  src/sensor/adxl345.c
 )
 
 target_include_directories(app PRIVATE src)
