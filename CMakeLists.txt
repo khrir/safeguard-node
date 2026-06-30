@@ -10,6 +10,8 @@ target_sources(app PRIVATE
   src/actuators/led.c
   src/actuators/buzzer.c
   src/sensor/adxl345.c
+  src/shell/shell_cmd.c
+  src/settings/settings_nvs.c
 )
 
 target_include_directories(app PRIVATE src)
