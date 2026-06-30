@@ -52,6 +52,7 @@ Desktop.ini
 # Temporários
 *.tmp
 *.log
+.cache/
 
 # HTML gerado para exportação de PDF (não rastrear)
 docs/*.html

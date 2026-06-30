@@ -41,7 +41,7 @@ enum sg_state sg_fsm_transition(enum sg_state s, bool arm_cmd, bool impact) {
 
 void sg_proc_thread(void *a, void *b, void *c) {
     const struct zbus_channel *channel;
-    struct sg_accel accel;
+    struct sg_accel accel = {0};
     struct sg_arm_cmd cmd;
     enum sg_state new_state;
 
@@ -65,12 +65,12 @@ void sg_proc_thread(void *a, void *b, void *c) {
 
         if (new_state != state) {
             if (new_state == SG_ARMED) {
-                baseline = accel;
+                zbus_chan_read(&accel_data, &baseline, K_MSEC(10));
                 LOG_INF("Sistema armado.");
             } else if (new_state == SG_ALARM) {
-                LOG_ERR("Alarme: impacto detectado.");
+                LOG_INF("Alarme: impacto detectado.");
             } else {
-                LOG_ERR("Sistema desarmado.");
+                LOG_INF("Sistema desarmado.");
             }
             state = new_state;
             zbus_chan_pub(&system_state, &state, K_MSEC(10));

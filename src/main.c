@@ -10,7 +10,6 @@ int main(void)
 	LOG_INF("SafeGuard Node iniciando...");
 
 	while (1) {
-		LOG_INF("rodando");
 		k_sleep(K_SECONDS(100));
 	}
 
