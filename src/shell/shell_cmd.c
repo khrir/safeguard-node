@@ -12,7 +12,7 @@ static int cmd_status(const struct shell *sh, size_t argc, char **argv) {
     zbus_chan_read(&system_state, &st, K_MSEC(10));
     const char *nomes[] = { "Desarmado", "Armado", "Alarme" };
     shell_print(sh, "Estado atual: %s", nomes[st]);
-    shell_print(sh, "Threshold: %u LBS", sg_settings_get_threshold());
+    shell_print(sh, "Threshold: %u LSB", sg_settings_get_threshold());
     return 0;
 }
 
@@ -26,7 +26,7 @@ static int cmd_arm(const struct shell *sh, size_t argc, char **argv) {
 static int cmd_disarm(const struct shell *sh, size_t argc, char **argv) {
     struct sg_arm_cmd cmd = { .arm = false };
     zbus_chan_pub(&arm_event, &cmd, K_MSEC(10));
-    shell_print(sh, "Evento de desarmamanto publicado.");
+    shell_print(sh, "Evento de desarmamento publicado.");
     return 0;
 }
 
@@ -53,7 +53,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sg_cmds,
     SHELL_CMD(status, NULL, "Exibe o estado do threshold", cmd_status),
     SHELL_CMD(arm, NULL, "Arma o sistema", cmd_arm),
     SHELL_CMD(disarm, NULL, "Desarma o sistema", cmd_disarm),
-    SHELL_CMD(threshold, NULL, "Define o threshold em LBS", cmd_threshold),
+    SHELL_CMD(threshold, NULL, "Define o threshold em LSB", cmd_threshold),
     SHELL_CMD(reset, NULL, "Reconhece o alarme", cmd_reset),
     SHELL_SUBCMD_SET_END
 );

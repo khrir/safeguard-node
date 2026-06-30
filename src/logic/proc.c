@@ -1,10 +1,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include "bus/zbus_channels.h"
+#include "settings/settings_nvs.h"
 
 LOG_MODULE_REGISTER(sg_proc, LOG_LEVEL_INF);
 
-static uint16_t threshold_lsb = 80;
 static struct sg_accel baseline;
 static enum sg_state state = SG_DISARMED;
 
@@ -57,7 +57,7 @@ void sg_proc_thread(void *a, void *b, void *c) {
             zbus_chan_read(&accel_data, &accel, K_MSEC(10));
 
             if (state == SG_ARMED) {
-                impact = sg_detect_impact(&accel, &baseline, threshold_lsb);
+                impact = sg_detect_impact(&accel, &baseline, sg_settings_get_threshold());
             }
         }
 
