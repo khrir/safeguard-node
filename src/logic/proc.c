@@ -40,20 +40,22 @@ enum sg_state sg_fsm_transition(enum sg_state s, bool arm_cmd, bool impact) {
 }
 
 void sg_proc_thread(void *a, void *b, void *c) {
+    const struct zbus_channel *channel;
     struct sg_accel accel;
     struct sg_arm_cmd cmd;
     enum sg_state new_state;
 
-    while (1) {
-        // Verifica o evento de armar/desarmar
+    while (!zbus_sub_wait(&proc_sub, &channel, K_FOREVER)) {
         bool arm_cmd = false;
-        if (zbus_chan_read(&arm_event, &cmd, K_NO_WAIT) == 0) {
-            arm_cmd = cmd.arm || (!cmd.arm); //captura qualquer evento
-        }
-
-        // Verifica os dados do sensor
         bool impact = false;
-        if (zbus_chan_read(&arm_event, &cmd, K_NO_WAIT) == 0) {
+
+        // Verifica o evento de armar/desarmar
+        if (channel == &arm_event) {
+            zbus_chan_read(&arm_event, &cmd, K_MSEC(10));
+            arm_cmd = cmd.arm;
+        } else if (channel == &accel_data) { // Verifica os dados do sensor
+            zbus_chan_read(&accel_data, &accel, K_MSEC(10));
+
             if (state == SG_ARMED) {
                 impact = sg_detect_impact(&accel, &baseline, threshold_lsb);
             }
@@ -73,8 +75,6 @@ void sg_proc_thread(void *a, void *b, void *c) {
             state = new_state;
             zbus_chan_pub(&system_state, &state, K_MSEC(10));
         }
-
-        k_sleep(K_MSEC(50));
     }
 }
 
