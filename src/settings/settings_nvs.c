@@ -15,7 +15,7 @@ void sg_settings_set_threshold(uint16_t valor) {
     settings_save_one("sg/threshold", &threshold_lsb, sizeof(threshold_lsb));
 }
 
-static int sg_settings_load_cb(const char *key, size_t len, settings_read_cb read_cb, void *cb_arg, void *param) {
+static int sg_settings_load_cb(const char *key, size_t len, settings_read_cb read_cb, void *cb_arg) {
     if (strcmp(key, "threshold") == 0) {
         read_cb(cb_arg, &threshold_lsb, sizeof(threshold_lsb));
     }

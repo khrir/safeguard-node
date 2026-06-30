@@ -1,14 +1,17 @@
 #include <zephyr/kernel.h>
 #include <zephyr/shell/shell.h>
 #include <zephyr/logging/log.h>
+#include <stdlib.h>
 #include "bus/zbus_channels.h"
+#include "settings/settings_nvs.h"
 
 LOG_MODULE_REGISTER(sg_shell, LOG_LEVEL_INF);
 
 static int cmd_status(const struct shell *sh, size_t argc, char **argv) {
-    extern enum sg_state state;
+    enum sg_state st;
+    zbus_chan_read(&system_state, &st, K_MSEC(10));
     const char *nomes[] = { "Desarmado", "Armado", "Alarme" };
-    shell_print(sh, "Estado atual: %s", nomes[state]);
+    shell_print(sh, "Estado atual: %s", nomes[st]);
     shell_print(sh, "Threshold: %u LBS", sg_settings_get_threshold());
     return 0;
 }
